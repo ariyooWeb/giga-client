@@ -1,0 +1,10 @@
+.user-reg-page {
+  display: flex;
+  justify-content: center;
+  padding-top: 100px;
+
+  &-greeting {
+    text-align: center;
+    padding-bottom: 30px;
+  }
+}

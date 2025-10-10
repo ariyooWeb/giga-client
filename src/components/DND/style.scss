@@ -1,0 +1,65 @@
+.dnd {
+  &-layout {
+    display: flex;
+    height: calc(100vh - 160px);
+    align-content: stretch;
+    justify-content: space-between;
+  }
+
+  &-cards {
+    display: flex;
+    width: 920px;
+    align-content: stretch;
+    justify-content: space-between;
+
+    &-card {
+      border: 1px solid #f0f0f0;
+      width: 130px;
+      padding: 0 10px;
+
+      &-title {
+        text-align: center;
+        padding: 10px 0;
+        font-weight: 600;
+      }
+
+      &-task {
+        background: #f0f0f0;
+        padding: 5px;
+        border-radius: 5px;
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 13px;
+      }
+    }
+  }
+
+  &-all {
+    display: flex;
+    align-content: stretch;
+
+    &-card {
+      border: 1px solid #f0f0f0;
+      width: 130px;
+      overflow-y: auto;
+      padding: 0 10px;
+
+      &-title {
+        text-align: center;
+        padding: 10px 0;
+        font-weight: 600;
+      }
+
+      &-task {
+        background: #f0f0f0;
+        padding: 5px;
+        border-radius: 5px;
+        width: 100%;
+        text-align: center;
+        margin-top: 10px;
+        font-size: 13px;
+      }
+    }
+  }
+}
