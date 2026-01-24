@@ -1,0 +1,30 @@
+.user-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  &-form {
+    padding: 40px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    width: 400px;
+
+    h1 {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    &-items {
+      .ant-form-item {
+        margin-bottom: 16px;
+      }
+
+      .ant-form-item:last-child {
+        text-align: right;
+        margin-bottom: 0;
+      }
+    }
+  }
+}

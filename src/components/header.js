@@ -5,28 +5,15 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Menu from "./Menu/Menu";
+import { useDispatch, useSelector } from "react-redux";
+import { clearToken } from "../store/user";
 
-const items = [
-  {
-    label: "오픈팀 등록",
-    key: "/openteam/register",
-  },
-  {
-    label: "오픈팀 조회",
-    key: "/openteam/list",
-  },
-  {
-    label: "회원 등록",
-    key: "/user/register",
-  },
-  {
-    label: "회원 조회",
-    key: "/user/list",
-  },
-];
 const Header = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.user.token); // Get token from Redux store
   const [current, setCurrent] = useState();
+
   const onClick = (key) => {
     router.push(key);
     setCurrent(key);
@@ -36,9 +23,43 @@ const Header = () => {
     setCurrent("/");
   };
 
+  const handleLogout = () => {
+    dispatch(clearToken());
+    router.push("/login");
+  };
+
+  const handleLogin = () => {
+    router.push("/login");
+  };
+
   useEffect(() => {
     setCurrent(window.location.pathname);
   }, []);
+
+  // Menu items without conditional login item
+  const menuItems = [
+    {
+      label: "회원 관리",
+      key: "/user",
+    },
+    {
+      label: "가수, 곡 등록",
+      key: "/song",
+    },
+    {
+      label: "오픈팀 등록",
+      key: "/openteam",
+    },
+    {
+      label: "팀 등록",
+      key: "/team",
+    },
+    {
+      label: "참석률 조회",
+      key: "/count",
+    },
+  ];
+
   return (
     <div className="main-header">
       <div className="main-header-inner">
@@ -52,11 +73,20 @@ const Header = () => {
             alt="logo"
             onClick={onClickLogo}
           />
-          <Menu items={items} onClick={onClick} current={current} />
+          <Menu items={menuItems} onClick={onClick} current={current} />
         </div>
         <div className="main-header-info">
-          <div className="main-header-info-login">로그아웃</div>
-          <div className="main-header-info-user">유아름님 환영합니다!</div>
+          {token ? (
+            <>
+              <div className="main-header-info-login" onClick={handleLogout}>
+                로그아웃
+              </div>
+            </>
+          ) : (
+            <div className="main-header-info-login" onClick={handleLogin}>
+              로그인
+            </div>
+          )}
         </div>
       </div>
     </div>
