@@ -1,11 +1,14 @@
 "use client";
-import UserList from "./list/page.jsx";
+import React from "react";
+import UserRegister from "./register/page.jsx";
+import UserListMatrix from "./list/page.jsx";
 import "./style.scss";
 
 const UserPage = () => {
   return (
-    <div className="user-list">
-      <UserList />
+    <div className="user-container">
+      <UserRegister />
+      <UserListMatrix />
     </div>
   );
 };

@@ -1,30 +1,57 @@
-.user-list {
+.user-container {
   display: flex;
+  gap: 20px;
+  padding: 20px;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  max-height: calc(100vh - 104px); /* Assuming header height + total padding */
+  // overflow-y: auto;
+}
 
-  &-form {
-    padding: 40px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-color: #fff;
-    width: 400px;
+.user-form {
+  padding: 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  width: 400px;
 
-    h1 {
-      text-align: center;
-      margin-bottom: 24px;
+  h1 {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  &-items {
+    .ant-form-item {
+      margin-bottom: 16px;
     }
 
-    &-items {
-      .ant-form-item {
-        margin-bottom: 16px;
-      }
-
-      .ant-form-item:last-child {
-        text-align: right;
-        margin-bottom: 0;
-      }
+    .ant-form-item:last-child {
+      text-align: right;
+      margin-bottom: 0;
     }
   }
+}
+
+.user-list-matrix {
+  padding: 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+
+  h1 {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+}
+
+.user-list-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.user-list-matrix-item {
+  padding: 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  text-align: center;
 }

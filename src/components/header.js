@@ -7,20 +7,22 @@ import Image from "next/image";
 import Menu from "./Menu/Menu";
 import { useDispatch, useSelector } from "react-redux";
 import { clearToken } from "../store/user";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const token = useSelector((state) => state.user.token); // Get token from Redux store
-  const [current, setCurrent] = useState();
+  // const [current, setCurrent] = useState();
+  const pathname = usePathname();
 
   const onClick = (key) => {
     router.push(key);
-    setCurrent(key);
+    // setCurrent(key);
   };
   const onClickLogo = () => {
     router.push("/");
-    setCurrent("/");
+    // setCurrent("/");
   };
 
   const handleLogout = () => {
@@ -33,8 +35,12 @@ const Header = () => {
   };
 
   useEffect(() => {
-    setCurrent(window.location.pathname);
-  }, []);
+    console.log("pathname확인하기", pathname);
+  }, [pathname]);
+
+  // useEffect(() => {
+  //   setCurrent(window.location.pathname);
+  // }, []);
 
   // Menu items without conditional login item
   const menuItems = [
@@ -73,7 +79,7 @@ const Header = () => {
             alt="logo"
             onClick={onClickLogo}
           />
-          <Menu items={menuItems} onClick={onClick} current={current} />
+          <Menu items={menuItems} onClick={onClick} current={pathname} />
         </div>
         <div className="main-header-info">
           {token ? (

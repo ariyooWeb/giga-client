@@ -43,7 +43,7 @@ const LoginPage = () => {
               <Input.Password />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit" block>
                 Login
               </Button>
             </Form.Item>
