@@ -1,0 +1,19 @@
+.openteam-list-page-container {
+  padding: 40px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  width: 400px;
+  text-align: center;
+  position: relative; /* Added for absolute positioning of children */
+
+  h1 {
+    margin-bottom: 24px;
+  }
+
+  .ant-list {
+    max-height: 560px; /* Set max height for scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding-right: 10px; /* Add some padding for scrollbar */
+  }
+}

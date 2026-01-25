@@ -1,51 +1,149 @@
 "use client";
 import React, { useState } from "react";
-import { Form, Input, DatePicker, Button, AutoComplete } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Select,
+  Checkbox,
+  DatePicker,
+  AutoComplete,
+} from "antd";
 import "./style.scss";
-import dynamic from "next/dynamic";
-const Dnd = dynamic(() => import("../../../components/DND/Dnd"), {
-  ssr: false,
-});
 
-const register = () => {
+const OpenteamRegister = () => {
+  const singerData = [
+    {
+      id: 5,
+      nameEng: "MayTree",
+      nameKor: "메이트리",
+      region: "대한민국",
+      songs: [
+        {
+          id: 11,
+          name: "Dolls",
+        },
+      ],
+    },
+    {
+      id: 6,
+      nameEng: "TheRealGroup",
+      nameKor: "리얼그룹",
+      region: "스웨덴",
+      songs: [
+        {
+          id: 9,
+          name: "Words",
+        },
+        {
+          id: 10,
+          name: "I Sing, You Sing",
+        },
+      ],
+    },
+  ];
+
   const users = [
-    { value: "유아름(90)", label: "유아름1", id: 1 },
-    { value: "유아름(92)", label: "유아름2", id: 2 },
-    { value: "방원택(94)", label: "방원택", id: 3 },
+    "유아름",
+    "김동현",
+    "방원택",
+    "최효철",
+    "김미사",
+    "이형원",
+    "탁현정",
+    "전민아",
   ];
+  const birthRegex = /^\d{4}-\d{2}-\d{2}$/;
 
-  const singers = [
-    { value: "리얼그룹", label: "리얼그룹", id: 1 },
-    { value: "The Idea Of North", label: "The Idea Of North", id: 2 },
-    { value: "Pentatonix", label: "Pentatonix", id: 3 },
-  ];
+  const [filteredSingers, setFilteredSingers] = useState(
+    singerData.map((s) => ({ value: s.nameKor, id: s.id })),
+  );
+  const [selectedSingerSongs, setSelectedSingerSongs] = useState([]);
+  const [filteredUsers, setFilteredUsers] = useState(users.map(user => ({ value: user }))); // New state for users
+  const [form] = Form.useForm();
+
+  const onFinish = () => {
+    console.log("오오오오");
+  };
+
+  const handleSearch = (value) => {
+    if (value) {
+      const filtered = singerData
+        .filter((s) => s.nameKor.toLowerCase().includes(value.toLowerCase()))
+        .map((s) => ({ value: s.nameKor, id: s.id }));
+      setFilteredSingers(filtered);
+    } else {
+      setFilteredSingers(
+        singerData.map((s) => ({ value: s.nameKor, id: s.id })),
+      );
+    }
+  };
+
+  // New handleUserSearch for the "진행자" AutoComplete
+  const handleUserSearch = (value) => {
+    if (value) {
+      const filtered = users
+        .filter((user) => user.toLowerCase().includes(value.toLowerCase()))
+        .map((user) => ({ value: user }));
+      setFilteredUsers(filtered);
+    } else {
+      setFilteredUsers(users.map((user) => ({ value: user })));
+    }
+  };
+
+  const onSelectSinger = (value, option) => {
+    const singer = singerData.find((s) => s.nameKor === value);
+    if (singer) {
+      setSelectedSingerSongs(singer.songs);
+      form.setFieldsValue({ song: undefined });
+    } else {
+      setSelectedSingerSongs([]);
+    }
+  };
 
   return (
-    <div className="openteam-reg-page">
-      <div className="openteam-reg-page-form">
-        <Form>
-          <div className="openteam-reg-page-form-items">
-            <div className="openteam-reg-page-form-items-inputs">
-              <Form.Item label="날짜" style={{ width: 200 }}>
-                <DatePicker />
-              </Form.Item>
-              <Form.Item label="진행자" style={{ width: 200 }}>
-                <AutoComplete options={users} />
-              </Form.Item>
-              <Form.Item label="가수명" style={{ width: 200 }}>
-                <AutoComplete options={singers} />
-              </Form.Item>
-              <Form.Item label="곡명" style={{ width: 200 }}>
-                <Input />
-              </Form.Item>
-            </div>
-            <Button type="primary">Save</Button>
-          </div>
-        </Form>
-      </div>
-      <Dnd />
+    <div className="user-form">
+      <h1>오픈팀 등록</h1>
+      <Form onFinish={onFinish} form={form}>
+        <div className="user-form-items">
+          <Form.Item
+            label="날짜"
+            name="date"
+            rules={[{ required: true, message: "날짜" }]}
+          >
+            <DatePicker style={{ width: "100%" }} />
+          </Form.Item>
+          <Form.Item label="가수" name="singer" rules={[{ required: true }]}>
+            <AutoComplete
+              options={filteredSingers}
+              onSearch={handleSearch}
+              onSelect={onSelectSinger}
+            />
+          </Form.Item>
+          <Form.Item label="곡" name="song" rules={[{ required: true }]}>
+            <Select
+              options={selectedSingerSongs.map((song) => ({
+                value: song.id,
+                label: song.name,
+              }))}
+              disabled={selectedSingerSongs.length === 0}
+            />
+          </Form.Item>
+          <Form.Item label="진행자" name="leader" rules={[{ required: true }]}>
+            <AutoComplete
+              options={filteredUsers}
+              onSearch={handleUserSearch}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" block>
+              등록
+            </Button>
+          </Form.Item>
+        </div>
+      </Form>
     </div>
   );
 };
 
-export default register;
+export default OpenteamRegister;

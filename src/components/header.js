@@ -1,6 +1,7 @@
 "use client";
 import "antd/dist/reset.css";
 import "../styles/main.scss";
+import "../styles/common.scss";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";

@@ -6,7 +6,7 @@ import "./style.scss";
 
 const UserPage = () => {
   return (
-    <div className="user-container">
+    <div className="page-container">
       <UserRegister />
       <UserListMatrix />
     </div>

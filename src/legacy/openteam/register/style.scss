@@ -1,0 +1,16 @@
+.openteam-reg-page {
+  padding: 20px 50px;
+  width: 70%;
+  margin: 0 auto;
+  &-form {
+    &-items {
+      display: flex;
+      justify-content: space-between;
+
+      &-inputs {
+        display: flex;
+        gap: 40px;
+      }
+    }
+  }
+}
