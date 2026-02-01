@@ -36,3 +36,65 @@
   scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
 }
 */
+
+.common-form {
+  padding: 40px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  width: 400px;
+
+  h1 {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  &-items {
+    .ant-form-item {
+      margin-bottom: 16px;
+    }
+
+    .ant-form-item:last-child {
+      text-align: right;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.user-list-matrix {
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fff;
+  min-height: 613px;
+  max-height: 613px;
+  height: 613px;
+
+  h1 {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+}
+
+.user-list-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(60px, 1fr));
+  gap: 10px;
+  max-height: 468px;
+  overflow-y: auto;
+  margin-top: 20px;
+}
+
+.user-list-matrix-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  padding: 5px; /* Reduced padding to give more space for text */
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 12px;
+  word-break: break-all; /* Ensures long names wrap */
+}

@@ -10,10 +10,10 @@ const UserRegister = () => {
     console.log("오오오오");
   };
   return (
-    <div className="user-form">
+    <div className="common-form">
       <h1>회원관리</h1>
       <Form onFinish={onFinish}>
-        <div className="user-form-items">
+        <div className="common-form-items">
           <Form.Item
             label="이름"
             name="name"
@@ -72,7 +72,7 @@ const UserRegister = () => {
             name="isAdmin"
             rules={[{ required: false }]}
           >
-            <Checkbox />
+            <Checkbox checked={true} />
           </Form.Item>
           <Form.Item
             label="등록 날짜"
@@ -86,14 +86,14 @@ const UserRegister = () => {
             <Input
               readOnly
               variant="borderless"
-              initialValue="2023-01-01 10:00:00"
+              initialvalue="2023-01-01 10:00:00"
             />
           </Form.Item>
           <Form.Item label="업데이트 날짜" name="updateDate">
             <Input
               readOnly
               variant="borderless"
-              initialValue="2023-01-01 12:30:00"
+              initialvalue="2023-01-01 12:30:00"
             />
           </Form.Item>
           <Form.Item>

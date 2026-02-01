@@ -1,50 +1,52 @@
 "use client";
-import React from "react";
-import { List, Button } from "antd"; // Import Button
+import React, { useState } from "react";
+import { List, Button, Radio } from "antd"; // Import Button and Radio
 import "./style.scss";
-import { PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined, EditOutlined, UserAddOutlined } from "@ant-design/icons";
+import openteamData from "./data";
 
-const OpenteamListPage = ({ setCurrent }) => {
-  const openteamData = [
-    { date: "2026-01-13", leader: "유아름", song: "walking down the street" },
-    { date: "2026-01-20", leader: "김동현", song: "words" },
-    { date: "2026-01-27", leader: "박선영", song: "bright side" },
-    { date: "2026-02-03", leader: "최준호", song: "flying high" },
+const OpenteamListPage = ({ setCurrent, selectedValue, setSelectedValue }) => {
+  const handleItemClick = (index) => {
+    setSelectedValue(index);
+    setCurrent("form");
+  };
 
-    { date: "2026-01-13", leader: "유아름", song: "walking down the street" },
-    { date: "2026-01-20", leader: "김동현", song: "words" },
-    { date: "2026-01-27", leader: "박선영", song: "bright side" },
-    { date: "2026-02-03", leader: "최준호", song: "flying high" },
-  ];
+  const handleCreate = () => {
+    setSelectedValue(null);
+    setCurrent("form");
+  };
 
   return (
-    <div className="openteam-list-page-container">
-      <h1 id="openteam-list-title">오픈팀 목록</h1>
-      <Button
-        type="primary"
-        style={{ position: "absolute", top: "37px", right: "20px" }}
-        shape="sqaure"
-        icon={<PlusOutlined />}
-        onClick={() => setCurrent("form")}
-      />
-      <List
-        itemLayout="horizontal"
-        dataSource={openteamData}
-        renderItem={(item) => (
-          <List.Item>
-            <List.Item.Meta
-              title={item.date}
-              description={
-                <>
-                  <div>
-                    {item.leader}/{item.song}
-                  </div>
-                </>
-              }
-            />
-          </List.Item>
-        )}
-      />
+    <div className="openteam-list-container">
+      <div className="openteam-list-actions">
+        <div className="openteam-list-actions-right">
+          <Button icon={<PlusOutlined />} onClick={handleCreate} />
+        </div>
+      </div>
+      <div className="common-form">
+        <h1 id="openteam-list-title">오픈팀 목록</h1>
+        <List
+          itemLayout="horizontal"
+          dataSource={openteamData}
+          renderItem={(item, index) => (
+            <List.Item
+              className={selectedValue === index ? "selected" : ""}
+              onClick={() => handleItemClick(index)}
+            >
+              <List.Item.Meta
+                title={item.date}
+                description={
+                  <>
+                    <div>
+                      {item.leader}/{item.song}
+                    </div>
+                  </>
+                }
+              />
+            </List.Item>
+          )}
+        />
+      </div>
     </div>
   );
 };

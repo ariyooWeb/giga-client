@@ -1,5 +1,4 @@
-"use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Form,
   Input,
@@ -9,9 +8,15 @@ import {
   DatePicker,
   AutoComplete,
 } from "antd";
+import dayjs from "dayjs";
 import "./style.scss";
 
-const OpenteamRegister = () => {
+const OpenteamRegister = ({
+  setCurrent,
+  team,
+  selectedUsers = [],
+  onUserRemove = () => {},
+}) => {
   const singerData = [
     {
       id: 5,
@@ -59,8 +64,21 @@ const OpenteamRegister = () => {
     singerData.map((s) => ({ value: s.nameKor, id: s.id })),
   );
   const [selectedSingerSongs, setSelectedSingerSongs] = useState([]);
-  const [filteredUsers, setFilteredUsers] = useState(users.map(user => ({ value: user }))); // New state for users
+  const [filteredUsers, setFilteredUsers] = useState(
+    users.map((user) => ({ value: user })),
+  ); // New state for users
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (team) {
+      form.setFieldsValue({
+        date: dayjs(team.date),
+        leader: team.leader,
+        // Assuming song name can be matched to an ID. This might need more robust logic.
+        // For now, we leave it blank as we don't have a direct mapping.
+      });
+    }
+  }, [team, form]);
 
   const onFinish = () => {
     console.log("오오오오");
@@ -102,46 +120,69 @@ const OpenteamRegister = () => {
   };
 
   return (
-    <div className="user-form">
-      <h1>오픈팀 등록</h1>
-      <Form onFinish={onFinish} form={form}>
-        <div className="user-form-items">
-          <Form.Item
-            label="날짜"
-            name="date"
-            rules={[{ required: true, message: "날짜" }]}
-          >
-            <DatePicker style={{ width: "100%" }} />
-          </Form.Item>
-          <Form.Item label="가수" name="singer" rules={[{ required: true }]}>
-            <AutoComplete
-              options={filteredSingers}
-              onSearch={handleSearch}
-              onSelect={onSelectSinger}
-            />
-          </Form.Item>
-          <Form.Item label="곡" name="song" rules={[{ required: true }]}>
-            <Select
-              options={selectedSingerSongs.map((song) => ({
-                value: song.id,
-                label: song.name,
-              }))}
-              disabled={selectedSingerSongs.length === 0}
-            />
-          </Form.Item>
-          <Form.Item label="진행자" name="leader" rules={[{ required: true }]}>
-            <AutoComplete
-              options={filteredUsers}
-              onSearch={handleUserSearch}
-            />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block>
-              등록
-            </Button>
-          </Form.Item>
+    <div className="openteam-register-wrapper">
+      <button className="back-button" onClick={() => setCurrent("list")}>
+        &#x2190;
+      </button>
+      <div className="common-form">
+        <h1>오픈팀 등록/수정</h1>
+        <Form onFinish={onFinish} form={form}>
+          <div className="common-form-items">
+            <Form.Item
+              label="날짜"
+              name="date"
+              rules={[{ required: true, message: "날짜" }]}
+            >
+              <DatePicker style={{ width: "100%" }} />
+            </Form.Item>
+            <Form.Item label="가수" name="singer" rules={[{ required: true }]}>
+              <AutoComplete
+                options={filteredSingers}
+                onSearch={handleSearch}
+                onSelect={onSelectSinger}
+              />
+            </Form.Item>
+            <Form.Item label="곡" name="song" rules={[{ required: true }]}>
+              <Select
+                options={selectedSingerSongs.map((song) => ({
+                  value: song.id,
+                  label: song.name,
+                }))}
+                disabled={selectedSingerSongs.length === 0}
+              />
+            </Form.Item>
+            <Form.Item
+              label="진행자"
+              name="leader"
+              rules={[{ required: true }]}
+            >
+              <AutoComplete
+                options={filteredUsers}
+                onSearch={handleUserSearch}
+              />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit" block>
+                저장
+              </Button>
+            </Form.Item>
+          </div>
+        </Form>
+        <div className="selected-users-grid">
+          <h3>참가자 목록</h3>
+          <div className="user-list-matrix-grid">
+            {selectedUsers.map((user, index) => (
+              <div
+                key={index}
+                className="user-list-matrix-item selected"
+                onClick={() => onUserRemove(user.id)}
+              >
+                {user.name}
+              </div>
+            ))}
+          </div>
         </div>
-      </Form>
+      </div>
     </div>
   );
 };

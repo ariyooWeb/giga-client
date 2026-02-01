@@ -1,71 +1,44 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import "./style.scss";
+import { Input, Tooltip } from "antd";
 
-const namesExample = [
-  "유아름",
-  "김동현",
-  "방원택",
-  "최효철",
-  "김미사",
-  "이형원",
-  "탁현정",
-  "전민아",
-  "박현서",
-  "김현화",
-  "최재원",
-  "박소다",
-  "최혜은",
-  "김태현",
-  "이종성",
-  "백이화",
-  "박한마로",
-  "유아름",
-  "김동현",
-  "방원택",
-  "최효철",
-  "김미사",
-  "이형원",
-  "탁현정",
-  "전민아",
-  "박현서",
-  "김현화",
-  "최재원",
-  "박소다",
-  "최혜은",
-  "김태현",
-  "이종성",
-  "백이화",
-  "박한마로",
-  "유아름",
-  "김동현",
-  "방원택",
-  "최효철",
-  "김미사",
-  "이형원",
-  "탁현정",
-  "전민아",
-  "박현서",
-  "김현화",
-  "최재원",
-  "박소다",
-  "최혜은",
-  "김태현",
-  "이종성",
-  "백이화",
-  "박한마로",
-];
+import namesExample from "./data";
 
-const UserListMatrix = () => {
+const UserListMatrix = ({ selectedUserIds = [], onUserSelect = () => {} }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredNames = namesExample.filter((user) =>
+    user.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
+
   return (
     <div className="user-list-matrix">
       <h1>회원목록</h1>
+      <Input
+        placeholder="이름을 입력하세요"
+        value={searchTerm}
+        onChange={handleSearchChange}
+      />
       <div className="user-list-matrix-grid">
-        {namesExample.map((user, index) => (
-          <div key={index} className="user-list-matrix-item">
-            {user}
-          </div>
-        ))}
+        {filteredNames.map((user, index) => {
+          const isSelected = selectedUserIds.includes(user.id);
+          return (
+            <div
+              key={index}
+              className={`user-list-matrix-item ${isSelected ? "selected" : ""}`}
+              onClick={() => onUserSelect(user.id)}
+            >
+              <Tooltip title={user.nickname}>
+                <span>{user.name}</span>
+              </Tooltip>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

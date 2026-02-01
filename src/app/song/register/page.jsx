@@ -9,12 +9,12 @@ const SongRegister = () => {
   };
 
   return (
-    <div className="user-form">
+    <div className="common-form">
       {" "}
-      {/* Using user-form for consistent styling */}
+      {/* Using common-form for consistent styling */}
       <h1>곡 등록</h1>
       <Form onFinish={onFinish}>
-        <div className="user-form-items">
+        <div className="common-form-items">
           <Form.Item
             label="가수"
             name="singer"
