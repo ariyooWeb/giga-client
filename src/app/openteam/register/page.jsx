@@ -79,13 +79,27 @@ const OpenteamRegister = ({
       form.setFieldsValue({
         date: dayjs(team.date),
         leader: team.leader,
-        // Assuming song name can be matched to an ID. This might need more robust logic.
-        // For now, we leave it blank as we don't have a direct mapping.
+        singer: team.singer, // Set singer value
       });
+
+      // Manually trigger the song list population based on team.singer
+      const selectedSinger = singerData.find((s) => s.nameKor === team.singer);
+      if (selectedSinger) {
+        setSelectedSingerSongs(selectedSinger.songs);
+        // Find the song ID based on the song name from the team object
+        const songId = selectedSinger.songs.find(
+          (s) => s.name === team.song,
+        )?.id;
+        form.setFieldsValue({ song: songId }); // Set song value (ID)
+      } else {
+        setSelectedSingerSongs([]);
+        form.setFieldsValue({ song: undefined });
+      }
     } else {
       form.resetFields(); // Reset form fields if no team (new registration)
+      setSelectedSingerSongs([]); // Clear song options
     }
-  }, [team, form, formMode]);
+  }, [team, form, formMode, singerData]); // Add singerData to dependency array
 
   const onFinish = () => {
     console.log("오오오오");
@@ -200,7 +214,7 @@ const OpenteamRegister = ({
               labelCol={{ span: 24 }}
               wrapperCol={{ span: 24 }}
             >
-              <div className="selected-users-grid">
+              <div className={`selected-users-grid ${isViewMode ? 'view-mode-disabled-grid' : ''}`}>
                 <div className={`user-list-matrix-grid ${selectedUsers.length === 0 ? 'empty-list' : ''}`}>
                   {selectedUsers.length === 0 ? (
                     <div className="empty-message">참가자를 선택해 주세요</div>
