@@ -12,11 +12,16 @@ const OpenteamPage = () => {
   const [current, setCurrent] = useState("list");
   const [selectedValue, setSelectedValue] = useState(null);
   const [selectedUserIds, setSelectedUserIds] = useState([]); // State now holds IDs
+  const [formMode, setFormMode] = useState("register"); // New state for form mode, default to 'register' for new entry
 
   const handleSetCurrent = (view) => {
     setCurrent(view);
     if (view !== "participant_registration") {
       setSelectedUserIds([]); // Reset selected user IDs
+    }
+    // When switching from list to form, determine the initial formMode
+    if (view === "form") {
+      setFormMode(selectedValue === null ? "register" : "view");
     }
   };
 
@@ -46,6 +51,7 @@ const OpenteamPage = () => {
           setCurrent={handleSetCurrent}
           selectedValue={selectedValue}
           setSelectedValue={setSelectedValue}
+          setFormMode={setFormMode} // Pass setFormMode to list page
         />
       )}
       {current === "form" && (
@@ -55,10 +61,13 @@ const OpenteamPage = () => {
             team={editingTeam}
             selectedUsers={selectedUsers} // Pass the array of objects
             onUserRemove={handleUserSelect} // The handler still works with IDs
+            formMode={formMode} // Pass formMode to register page
+            setFormMode={setFormMode} // Pass setFormMode to register page
           />
           <UserListMatrix
             selectedUserIds={selectedUserIds} // Pass the array of IDs
             onUserSelect={handleUserSelect}
+            disabled={formMode === "view"} // Disable UserListMatrix in view mode
           />
         </div>
       )}

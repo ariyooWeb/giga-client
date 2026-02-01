@@ -8,6 +8,7 @@ import {
   DatePicker,
   AutoComplete,
 } from "antd";
+import { EditOutlined, UnorderedListOutlined } from "@ant-design/icons"; // Import EditOutlined icon and UnorderedListOutlined
 import dayjs from "dayjs";
 import "./style.scss";
 
@@ -16,7 +17,10 @@ const OpenteamRegister = ({
   team,
   selectedUsers = [],
   onUserRemove = () => {},
+  formMode, // new prop
+  setFormMode, // new prop
 }) => {
+  const [mode, setMode] = useState(formMode); // Internal state for 'view', 'edit', 'register'
   const singerData = [
     {
       id: 5,
@@ -70,6 +74,7 @@ const OpenteamRegister = ({
   const [form] = Form.useForm();
 
   useEffect(() => {
+    setMode(formMode); // Update internal mode when prop changes
     if (team) {
       form.setFieldsValue({
         date: dayjs(team.date),
@@ -77,11 +82,15 @@ const OpenteamRegister = ({
         // Assuming song name can be matched to an ID. This might need more robust logic.
         // For now, we leave it blank as we don't have a direct mapping.
       });
+    } else {
+      form.resetFields(); // Reset form fields if no team (new registration)
     }
-  }, [team, form]);
+  }, [team, form, formMode]);
 
   const onFinish = () => {
     console.log("오오오오");
+    setMode("view"); // After saving, go back to view mode
+    setFormMode("view"); // Also update the parent's formMode to 'view'
   };
 
   const handleSearch = (value) => {
@@ -97,7 +106,6 @@ const OpenteamRegister = ({
     }
   };
 
-  // New handleUserSearch for the "진행자" AutoComplete
   const handleUserSearch = (value) => {
     if (value) {
       const filtered = users
@@ -119,13 +127,37 @@ const OpenteamRegister = ({
     }
   };
 
+  const handleEditClick = () => {
+    setMode("edit");
+    setFormMode("edit"); // Also update the parent's formMode to 'edit'
+  };
+
+  const isViewMode = mode === "view";
+  const titleText =
+    mode === "register"
+      ? "오픈팀 등록"
+      : mode === "edit"
+        ? "오픈팀 수정"
+        : "오픈팀 정보"; // Assuming "오픈팀 정보" for view mode
+
   return (
     <div className="openteam-register-wrapper">
-      <button className="back-button" onClick={() => setCurrent("list")}>
-        &#x2190;
-      </button>
+      <div className="top-buttons-container">
+        {" "}
+        {/* New container for buttons */}
+        <button className="back-button" onClick={() => setCurrent("list")}>
+          <UnorderedListOutlined /> {/* Changed icon here */}
+        </button>
+        {isViewMode && (
+          <button className="edit-button" onClick={handleEditClick}>
+            {" "}
+            {/* Changed to plain button */}
+            <EditOutlined /> {/* Removed "수정" text */}
+          </button>
+        )}
+      </div>
       <div className="common-form">
-        <h1>오픈팀 등록/수정</h1>
+        <h1>{titleText}</h1>
         <Form onFinish={onFinish} form={form}>
           <div className="common-form-items">
             <Form.Item
@@ -133,13 +165,14 @@ const OpenteamRegister = ({
               name="date"
               rules={[{ required: true, message: "날짜" }]}
             >
-              <DatePicker style={{ width: "100%" }} />
+              <DatePicker style={{ width: "100%" }} disabled={isViewMode} />
             </Form.Item>
             <Form.Item label="가수" name="singer" rules={[{ required: true }]}>
               <AutoComplete
                 options={filteredSingers}
                 onSearch={handleSearch}
                 onSelect={onSelectSinger}
+                disabled={isViewMode}
               />
             </Form.Item>
             <Form.Item label="곡" name="song" rules={[{ required: true }]}>
@@ -148,7 +181,7 @@ const OpenteamRegister = ({
                   value: song.id,
                   label: song.name,
                 }))}
-                disabled={selectedSingerSongs.length === 0}
+                disabled={selectedSingerSongs.length === 0 || isViewMode}
               />
             </Form.Item>
             <Form.Item
@@ -159,29 +192,44 @@ const OpenteamRegister = ({
               <AutoComplete
                 options={filteredUsers}
                 onSearch={handleUserSearch}
+                disabled={isViewMode}
               />
             </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit" block>
-                저장
-              </Button>
+            <Form.Item
+              label="참가자 목록"
+              labelCol={{ span: 24 }}
+              wrapperCol={{ span: 24 }}
+            >
+              <div className="selected-users-grid">
+                <div className={`user-list-matrix-grid ${selectedUsers.length === 0 ? 'empty-list' : ''}`}>
+                  {selectedUsers.length === 0 ? (
+                    <div className="empty-message">참가자를 선택해 주세요</div>
+                  ) : (
+                    selectedUsers.map((user, index) => (
+                      <div
+                        key={index}
+                        className="user-list-matrix-item selected"
+                        onClick={() =>
+                          isViewMode ? null : onUserRemove(user.id)
+                        } // Disable remove in view mode
+                        style={{ cursor: isViewMode ? "default" : "pointer" }}
+                      >
+                        {user.name}
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
             </Form.Item>
+            {!isViewMode && ( // Only show save button if not in view mode
+              <Form.Item>
+                <Button type="primary" htmlType="submit" block>
+                  저장
+                </Button>
+              </Form.Item>
+            )}
           </div>
         </Form>
-        <div className="selected-users-grid">
-          <h3>참가자 목록</h3>
-          <div className="user-list-matrix-grid">
-            {selectedUsers.map((user, index) => (
-              <div
-                key={index}
-                className="user-list-matrix-item selected"
-                onClick={() => onUserRemove(user.id)}
-              >
-                {user.name}
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </div>
   );

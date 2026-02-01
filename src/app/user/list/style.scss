@@ -1,3 +1,12 @@
+.user-list-matrix.disabled {
+  opacity: 0.6;
+  pointer-events: none; // Disable all pointer events on the element
+  cursor: not-allowed;
+
+  .user-list-matrix-item {
+    cursor: not-allowed !important; // Ensure individual items also show not-allowed cursor
+  }
+}
 
 .user-list-matrix-item.selected {
   background-color: #e6f7ff;
