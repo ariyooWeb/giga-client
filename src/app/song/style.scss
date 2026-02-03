@@ -1,8 +1,8 @@
 .user-list-container {
   display: flex;
   gap: 20px;
-  padding: 20px;
   justify-content: center;
-  max-height: calc(100vh - 104px); /* Assuming header height + total padding */
+  align-items: center;
+  height: calc(100vh - 47px); /* Assuming header height + total padding */
   overflow-y: auto;
 }

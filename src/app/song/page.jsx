@@ -6,7 +6,7 @@ import "./style.scss";
 
 const SongPage = () => {
   return (
-    <div className="user-list-container">
+    <div className="page-container">
       <SongRegister />
       <SongListMatrix />
     </div>

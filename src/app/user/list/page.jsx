@@ -2,14 +2,20 @@
 import React, { useState } from "react";
 import "./style.scss";
 import { Input, Tooltip } from "antd";
+import StyledInput from "@/components/Input";
 
 import namesExample from "./data";
 
-const UserListMatrix = ({ selectedUserIds = [], onUserSelect = () => {}, disabled = false }) => {
+const UserListMatrix = ({
+  selectedUserIds = [],
+  onUserSelect = () => {},
+  disabled = false,
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearchChange = (e) => {
-    if (!disabled) { // Only allow search if not disabled
+    if (!disabled) {
+      // Only allow search if not disabled
       setSearchTerm(e.target.value);
     }
   };
@@ -19,9 +25,11 @@ const UserListMatrix = ({ selectedUserIds = [], onUserSelect = () => {}, disable
   );
 
   return (
-    <div className={`user-list-matrix ${disabled ? 'disabled' : ''}`}>
-      <h1>회원목록</h1>
-      <Input
+    <div className={`common-form ${disabled ? "disabled" : ""}`}>
+      <div className="common-form-title">
+        <h1>회원목록</h1>
+      </div>
+      <StyledInput
         placeholder="이름을 입력하세요"
         value={searchTerm}
         onChange={handleSearchChange}
@@ -39,7 +47,7 @@ const UserListMatrix = ({ selectedUserIds = [], onUserSelect = () => {}, disable
                   onUserSelect(user.id);
                 }
               }}
-              style={{ cursor: disabled ? 'not-allowed' : 'pointer' }}
+              style={{ cursor: disabled ? "not-allowed" : "pointer" }}
             >
               <Tooltip title={user.nickname}>
                 <span>{user.name}</span>

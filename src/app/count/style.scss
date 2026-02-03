@@ -1,0 +1,87 @@
+.page-container {
+  .common-form {
+    h1 {
+      text-align: center;
+      margin-bottom: 24px;
+      color: #333;
+    }
+
+    .range-picker-container {
+      margin-bottom: 24px;
+      display: flex;
+      justify-content: center;
+
+      .ant-picker {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+
+    .ant-list {
+      .team-item {
+        margin-bottom: 15px;
+        border: 1px solid #e8e8e8;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        padding: 0; /* Remove default list item padding */
+
+        &.highlight {
+          border: 2px solid #eb2f96; /* Green border for highlight */
+          box-shadow: 0 0 8px rgba(82, 196, 26, 0.3);
+        }
+
+        &:hover {
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          transform: translateY(-2px);
+        }
+
+        .team-card {
+          border: none; /* Remove card border as list item has one */
+          .ant-card-meta-title {
+            font-size: 14px;
+            /* Removed blue color */
+          }
+          .ant-card-meta-description {
+            padding-top: 10px;
+          }
+        }
+
+        .member-details {
+          margin-top: 10px;
+          padding-left: 20px;
+          border-top: 1px solid #f0f0f0;
+          padding-top: 10px;
+
+          .ant-list-item {
+            padding: 8px 0;
+            border-bottom: none; /* Remove individual member list item borders */
+          }
+        }
+      }
+    }
+    .placeholder-message {
+      text-align: center;
+      color: #8c8c8c;
+      font-size: 16px;
+      padding: 20px;
+    }
+  }
+
+  .count-card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    &-left {
+      &-team {
+        font-size: 14px;
+      }
+      &-count {
+        font-weight: 400;
+        span {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

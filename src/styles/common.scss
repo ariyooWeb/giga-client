@@ -1,10 +1,15 @@
 .page-container {
   display: flex;
   gap: 20px;
-  padding: 20px;
   justify-content: center;
-  height: calc(100vh - 64px);
+  height: calc(100vh - 47px);
   align-items: center;
+  background: #d0dff5;
+  background: linear-gradient(
+    180deg,
+    rgba(208, 223, 245, 1) 0%,
+    rgba(211, 226, 246, 1) 100%
+  );
 }
 
 /* Scrollbar Styling */
@@ -38,26 +43,81 @@
 */
 
 .common-form {
-  padding: 40px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #fff;
+  padding: 25px 20px;
+  // border: 1px solid #ccc;
+  border-radius: 20px;
+  // background-color: #fff;
   width: 400px;
+  height: 67vh;
+  background: #dfe9ff;
+  background: linear-gradient(
+    180deg,
+    rgba(223, 233, 255, 1) 0%,
+    rgba(237, 245, 253, 1) 100%
+  );
+  box-shadow: 20px 20px 60px #bec6d9;
+  color: #69728a;
+
+  .common-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #edf5fd;
+    box-shadow:
+      7px 7px 14px #ccd3da,
+      -7px -7px 14px #ffffff;
+    cursor: pointer;
+
+    &.left {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    &.right {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+
+  &-title {
+    height: 40px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-bottom: 30px;
+  }
 
   h1 {
     text-align: center;
-    margin-bottom: 24px;
+    margin-bottom: 0 !important;
+  }
+
+  .ant-input:hover {
+    background: #dfe9ff;
   }
 
   &-items {
-    .ant-form-item {
-      margin-bottom: 16px;
-    }
-
     .ant-form-item:last-child {
       text-align: right;
       margin-bottom: 0;
     }
+  }
+
+  &-label {
+    font-size: 12px;
+    color: #69728a;
+  }
+
+  &.disabled {
+    opacity: 0.6;
+    pointer-events: none;
   }
 }
 
@@ -66,9 +126,7 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #fff;
-  min-height: 613px;
-  max-height: 613px;
-  height: 613px;
+  height: 67vh;
 
   h1 {
     text-align: center;
@@ -80,7 +138,7 @@
   display: grid;
   grid-template-columns: repeat(5, minmax(60px, 1fr));
   gap: 10px;
-  max-height: 468px;
+  max-height: 420px;
   overflow-y: auto;
   overflow-x: hidden;
   margin-top: 20px;
@@ -93,10 +151,36 @@
   width: 60px;
   height: 60px;
   padding: 5px; /* Reduced padding to give more space for text */
-  border: 1px solid #d9d9d9;
-  border-radius: 4px;
+  border-radius: 5px;
   text-align: center;
   font-size: 12px;
   word-break: break-all; /* Ensures long names wrap */
   cursor: pointer;
+  background: #dfe9ff;
+  box-shadow:
+    5px 5px 11px #cfd9ed,
+    -5px -5px 11px #eff9ff;
+}
+
+.ant-form-item-has-error {
+  .ant-input-status-error {
+    border-color: transparent !important;
+    box-shadow:
+      inset 7px 7px 9px #bebebe,
+      inset -7px -7px 9px #ffffff;
+    background: #dfe9ff !important;
+  }
+  .ant-form-item-explain-error {
+    color: #69728a !important;
+    opacity: 0.8;
+    font-size: 12px;
+  }
+}
+
+.ant-form-item-required::before {
+  display: none !important;
+} //필수항목 별 제거
+
+.ant-form-item-label {
+  padding: 0 !important;
 }

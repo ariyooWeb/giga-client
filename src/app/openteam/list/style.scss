@@ -42,11 +42,6 @@
 }
 
 .common-form {
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
   .ant-list {
     max-height: 480px;
     overflow-y: auto;

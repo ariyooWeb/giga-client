@@ -1,24 +1,33 @@
 .menus {
   display: flex;
-  gap: 30px;
-  padding: 15px 30px;
+  gap: 15px;
+  padding: 10px 30px;
   font-size: 14px;
 
   &-menu {
     position: relative;
     cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 10px;
 
     &.active {
-      color: #1677ff;
-      &::after {
-        content: "";
-        width: 100%;
-        height: 2px;
-        position: absolute;
-        bottom: -16px;
-        left: 0;
-        background: #1677ff;
-      }
+      // color: #1677ff;
+      // box-shadow: inset 10px 10px 10px #bec6d9;
+      // box-shadow:
+      //   inset 4px 4px 5px #bec6d9,
+      //   inset -4px -4px 5px #bec6d9;
+      box-shadow:
+        inset 5px 5px 5px #cbd4e8,
+        inset -5px -5px 5px #f3feff;
+      // &::after {
+      //   content: "";
+      //   width: 100%;
+      //   height: 2px;
+      //   position: absolute;
+      //   bottom: -16px;
+      //   left: 0;
+      //   background: #1677ff;
+      // }
     }
   }
 }

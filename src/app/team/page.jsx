@@ -1,21 +1,31 @@
 "use client";
 import React, { useState } from "react";
-import OpenteamListPage from "./list/page";
-import OpenteamRegister from "./register/page";
+import TeamListPage from "./list/page";
+import TeamRegister from "./register/page";
 import UserListMatrix from "../user/list/page";
-import openteamData from "./list/data";
+import teamData from "./list/data";
+import namesExample from "../user/list/data"; // Import the full user data
 import "./style.scss";
 
-import namesExample from "../user/list/data"; // Import the full user data
-
-const OpenteamPage = () => {
+const TeamPage = () => {
   const [current, setCurrent] = useState("list");
   const [selectedValue, setSelectedValue] = useState(null);
   const [selectedUserIds, setSelectedUserIds] = useState([]); // State now holds IDs
   const [formMode, setFormMode] = useState("register"); // New state for form mode, default to 'register' for new entry
 
-  const handleSetCurrent = (view) => {
-    setCurrent(view);
+  const handleViewChange = (view, initialSelectedUserIds = []) => {
+    setCurrent(view); // Update the 'current' state
+    // When switching from list to form, determine the initial formMode
+    if (view === "form") {
+      setFormMode(selectedValue === null ? "register" : "view");
+      setSelectedUserIds(initialSelectedUserIds); // Use the directly passed IDs
+    } else if (view === "list") {
+      // When going back to the list view, clear all selections
+      setSelectedUserIds([]);
+      setSelectedValue(null);
+    }
+    // The "participant_registration" view is not used for this "team" flow,
+    // so its original handling is not needed here.
   };
 
   // Handler now works with user IDs
@@ -30,7 +40,7 @@ const OpenteamPage = () => {
   };
 
   const editingTeam =
-    selectedValue !== null ? openteamData[selectedValue] : null;
+    selectedValue !== null ? teamData[selectedValue] : null;
 
   // Derive the full user objects from the IDs
   const selectedUsers = namesExample.filter((user) =>
@@ -40,8 +50,8 @@ const OpenteamPage = () => {
   return (
     <div className="page-container">
       {current === "list" && (
-        <OpenteamListPage
-          setCurrent={handleSetCurrent}
+        <TeamListPage
+          onViewChange={handleViewChange} // Renamed prop
           selectedValue={selectedValue}
           setSelectedValue={setSelectedValue}
           setFormMode={setFormMode} // Pass setFormMode to list page
@@ -49,8 +59,8 @@ const OpenteamPage = () => {
       )}
       {current === "form" && (
         <div className="participant-registration-container">
-          <OpenteamRegister
-            setCurrent={handleSetCurrent}
+          <TeamRegister
+            setCurrent={handleViewChange} // Still needs to be named setCurrent for TeamRegister to recognize the prop
             team={editingTeam}
             selectedUsers={selectedUsers} // Pass the array of objects
             onUserRemove={handleUserSelect} // The handler still works with IDs
@@ -68,4 +78,4 @@ const OpenteamPage = () => {
   );
 };
 
-export default OpenteamPage;
+export default TeamPage;

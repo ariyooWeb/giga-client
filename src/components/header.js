@@ -50,15 +50,15 @@ const Header = () => {
       key: "/user",
     },
     {
-      label: "가수, 곡 등록",
+      label: "가수, 곡 관리",
       key: "/song",
     },
     {
-      label: "오픈팀 등록",
+      label: "오픈팀 관리",
       key: "/openteam",
     },
     {
-      label: "팀 등록",
+      label: "팀 관리",
       key: "/team",
     },
     {

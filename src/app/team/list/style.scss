@@ -1,0 +1,37 @@
+.team-list-container {
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  border-radius: 20px;
+}
+
+.common-form {
+  .ant-list {
+    max-height: 480px;
+    overflow-y: auto;
+    padding-right: 10px;
+  }
+}
+
+.team-list {
+  &-item {
+    cursor: pointer;
+    box-shadow:
+      5px 5px 8px rgb(204, 211, 218, 0.85),
+      -3px -3px 8px rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    margin: 20px 0;
+  }
+
+  &-team {
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+
+  &-names {
+    font-size: 13px;
+  }
+}
