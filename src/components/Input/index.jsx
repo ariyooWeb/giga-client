@@ -20,6 +20,7 @@ const StyledInput = styled(Input)`
     color: #69728a;
     border-radius: 10px;
   }
+  transition: none !important;
 `;
 
 export default StyledInput;

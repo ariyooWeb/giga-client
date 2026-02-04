@@ -25,34 +25,26 @@ const OpenteamListPage = ({
 
   return (
     <div className="openteam-list-container">
-      <div className="openteam-list-actions">
-        <div className="openteam-list-actions-right">
-          <Button icon={<PlusOutlined />} onClick={handleCreate} />
-        </div>
-      </div>
       <div className="common-form">
-        <h1 id="openteam-list-title">오픈팀 목록</h1>
-        <List
-          itemLayout="horizontal"
-          dataSource={openteamData}
-          renderItem={(item, index) => (
-            <List.Item
-              className={selectedValue === index ? "selected" : ""}
+        <div className="common-form-title">
+          <h1 id="openteam-list-title">오픈팀 목록</h1>
+          <button className="common-button right" onClick={handleCreate}>
+            <PlusOutlined />
+          </button>
+        </div>
+        <div className="team-list">
+          {openteamData.map((item, index) => (
+            <div
+              className="team-list-item"
               onClick={() => handleItemClick(index)}
             >
-              <List.Item.Meta
-                title={item.date}
-                description={
-                  <>
-                    <div>
-                      {item.leader}/{item.song}
-                    </div>
-                  </>
-                }
-              />
-            </List.Item>
-          )}
-        />
+              <div className="team-list-team">{item.date}</div>
+              <div className="team-list-names">
+                {item.leader}/{item.song}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

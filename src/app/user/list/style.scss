@@ -9,6 +9,7 @@
 }
 
 .user-list-matrix-item.selected {
-  background-color: #e6f7ff;
-  border: 1px solid #91d5ff;
+  box-shadow:
+    inset 8px 8px 10px #c9d2e6,
+    inset -8px -8px 10px #f5ffff;
 }

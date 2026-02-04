@@ -1,8 +1,21 @@
 .main {
   &-header {
+    top: 10px;
+    position: absolute;
+    width: calc(100vw - 20px);
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     justify-content: center;
     color: #69728a;
+    border-radius: 10px;
+    background: #dfe9ff;
+    background: linear-gradient(
+      180deg,
+      rgba(223, 233, 255, 1) 0%,
+      rgba(237, 245, 253, 1) 100%
+    );
+    box-shadow: 20px 20px 60px #bec6d9;
 
     &-inner {
       width: 100%;
@@ -10,8 +23,6 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: linear-gradient(#dfe9ff 0%, #edf5fd 100%);
-      box-shadow: 0px 20px 60px 20px #bec6d9;
     }
 
     &-left {

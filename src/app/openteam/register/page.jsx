@@ -12,6 +12,9 @@ import { EditOutlined, UnorderedListOutlined } from "@ant-design/icons"; // Impo
 import dayjs from "dayjs";
 import "./style.scss";
 import StyledAutoComplete from "@/components/AutoComplete";
+import StyledSelect from "@/components/Select";
+import StyledButton from "@/components/Button";
+import StyledDatePicker from "@/components/DatePicker";
 
 // Move constant data outside the component to prevent re-creation on render and fix infinite loop.
 const singerData = [
@@ -175,14 +178,17 @@ const OpenteamRegister = ({
               name="date"
               rules={[{ required: true, message: "날짜" }]}
             >
-              <DatePicker style={{ width: "100%" }} disabled={isViewMode} />
+              <StyledDatePicker
+                style={{ width: "100%" }}
+                disabled={isViewMode}
+              />
             </Form.Item>
             <Form.Item
               label={<div className="common-form-label">가수</div>}
               name="singer"
               rules={[{ required: true }]}
             >
-              <AutoComplete
+              <StyledAutoComplete
                 options={filteredSingers}
                 onSearch={handleSearch}
                 onSelect={onSelectSinger}
@@ -194,7 +200,7 @@ const OpenteamRegister = ({
               name="song"
               rules={[{ required: true }]}
             >
-              <Select
+              <StyledSelect
                 options={selectedSingerSongs.map((song) => ({
                   value: song.id,
                   label: song.name,
@@ -215,40 +221,29 @@ const OpenteamRegister = ({
               />
             </Form.Item>
             <Form.Item
-              label={<div className="common-form-label">참가자 목록</div>}
+              label={
+                <div className="common-form-label">
+                  참가자 목록 {`(${selectedUsers.length})`}
+                </div>
+              }
               labelCol={{ span: 24 }}
               wrapperCol={{ span: 24 }}
             >
               <div
-                className={`selected-users-grid ${isViewMode ? "view-mode-disabled-grid" : ""}`}
+                className={`selected-users-box ${selectedUsers.length === 0 ? "empty-list" : ""}`}
               >
-                <div
-                  className={`user-list-matrix-grid ${selectedUsers.length === 0 ? "empty-list" : ""}`}
-                >
-                  {selectedUsers.length === 0 ? (
-                    <div className="empty-message">참가자를 선택해 주세요</div>
-                  ) : (
-                    selectedUsers.map((user, index) => (
-                      <div
-                        key={index}
-                        className="user-list-matrix-item selected"
-                        onClick={() =>
-                          isViewMode ? null : onUserRemove(user.id)
-                        }
-                        style={{ cursor: isViewMode ? "default" : "pointer" }}
-                      >
-                        {user.name}
-                      </div>
-                    ))
-                  )}
-                </div>
+                {selectedUsers.length === 0 ? (
+                  <div className="empty-message">참가자를 선택해 주세요</div>
+                ) : (
+                  <div>{selectedUsers.map((user) => user.name).join(", ")}</div>
+                )}
               </div>
             </Form.Item>
             {!isViewMode && (
               <Form.Item>
-                <Button type="primary" htmlType="submit" block>
+                <StyledButton type="primary" htmlType="submit" block>
                   저장
-                </Button>
+                </StyledButton>
               </Form.Item>
             )}
           </div>

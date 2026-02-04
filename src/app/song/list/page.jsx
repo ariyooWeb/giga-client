@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import "./style.scss";
+import { Tooltip } from "antd";
 
 const dummySongs = [
   { songTitle: "사랑을 했다", singer: "iKON" },
@@ -19,13 +20,17 @@ const dummySongs = [
 
 const SongListMatrix = () => {
   return (
-    <div className="song-list-form">
+    <div className="common-form">
       <h1>곡 목록</h1>
       <div className="song-list-matrix-grid">
         {dummySongs.map((song, index) => (
           <div key={index} className="song-list-matrix-item">
-            <div>{song.songTitle}</div>
-            <div className="song-singer">{song.singer}</div>
+            <Tooltip title={song.songTitle}>
+              <div className="song-title">{song.songTitle}</div>
+            </Tooltip>
+            <Tooltip title={song.singer}>
+              <div className="song-singer">{song.singer}</div>
+            </Tooltip>
           </div>
         ))}
       </div>
