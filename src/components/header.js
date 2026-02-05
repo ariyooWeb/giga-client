@@ -72,12 +72,13 @@ const Header = () => {
       <div className="main-header-inner">
         <div className="main-header-left">
           <Image
+            key="logo_transparent"
             src="/logo_transparent.png"
             className="main-header-logo"
             width={40}
             height={0}
             style={{ height: "auto" }}
-            alt="logo"
+            alt="logo_giga"
             onClick={onClickLogo}
           />
           <Menu items={menuItems} onClick={onClick} current={pathname} />
