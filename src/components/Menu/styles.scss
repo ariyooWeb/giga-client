@@ -10,6 +10,14 @@
     padding: 10px 15px;
     border-radius: 10px;
 
+    &:not(.active) {
+      &:hover {
+        box-shadow:
+          inset 2px 2px 5px #cad3e7,
+          inset -2px -2px 5px #f3feff;
+      }
+    }
+
     &.active {
       // color: #1677ff;
       // box-shadow: inset 10px 10px 10px #bec6d9;

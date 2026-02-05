@@ -72,7 +72,7 @@ const Header = () => {
       <div className="main-header-inner">
         <div className="main-header-left">
           <Image
-            src="/logo.png"
+            src="/logo_transparent.png"
             className="main-header-logo"
             width={40}
             height={0}

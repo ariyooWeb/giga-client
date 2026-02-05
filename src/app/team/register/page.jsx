@@ -3,6 +3,8 @@ import { Form, Input, Button } from "antd";
 import { EditOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import "./style.scss";
 import namesExample from "../../user/list/data"; // For getting user names from IDs
+import StyledButton from "@/components/Button";
+import StyledInput from "@/components/Input";
 
 const TeamRegister = ({
   setCurrent,
@@ -64,51 +66,35 @@ const TeamRegister = ({
             </button>
           )}
         </div>
-        <Form onFinish={onFinish} form={form}>
+        <Form onFinish={onFinish} form={form} layout="vertical">
           <div className="common-form-items">
             <Form.Item
-              label="팀 이름"
+              label={<div className="common-form-label">팀 이름</div>}
               name="team"
               rules={[{ required: true, message: "팀 이름을 입력해주세요!" }]}
             >
-              <Input disabled={isViewMode} />
+              <StyledInput disabled={isViewMode} />
             </Form.Item>
-
             <Form.Item
-              label="팀원 목록"
+              label={<div className="common-form-label">팀원 목록</div>}
               labelCol={{ span: 24 }}
               wrapperCol={{ span: 24 }}
             >
               <div
-                className={`selected-users-grid ${isViewMode ? "view-mode-disabled-grid" : ""}`}
+                className={`selected-users-box ${selectedUsers.length === 0 ? "empty-list" : ""}`}
               >
-                <div
-                  className={`user-list-matrix-grid ${selectedUsers.length === 0 ? "empty-list" : ""}`}
-                >
-                  {selectedUsers.length === 0 ? (
-                    <div className="empty-message">팀원을 선택해 주세요</div>
-                  ) : (
-                    selectedUsers.map((user, index) => (
-                      <div
-                        key={index}
-                        className="user-list-matrix-item selected"
-                        onClick={() =>
-                          isViewMode ? null : onUserRemove(user.id)
-                        }
-                        style={{ cursor: isViewMode ? "default" : "pointer" }}
-                      >
-                        {user.name}
-                      </div>
-                    ))
-                  )}
-                </div>
+                {selectedUsers.length === 0 ? (
+                  <div className="empty-message">팀원을 선택해 주세요</div>
+                ) : (
+                  <div>{selectedUsers.map((user) => user.name).join(", ")}</div>
+                )}
               </div>
             </Form.Item>
             {!isViewMode && (
               <Form.Item>
-                <Button type="primary" htmlType="submit" block>
+                <StyledButton type="primary" htmlType="submit" block>
                   저장
-                </Button>
+                </StyledButton>
               </Form.Item>
             )}
           </div>

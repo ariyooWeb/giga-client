@@ -1,5 +1,36 @@
 .main {
+  &-background {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    img {
+      object-fit: cover;
+      width: 100vw;
+      height: 100vh;
+      object-position: 50% 20%;
+    }
+  }
+
+  &-explain {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 10%;
+
+    &-giga {
+      font-weight: bold;
+      font-size: 40px;
+      letter-spacing: 14px;
+    }
+
+    &-text {
+      font-weight: 500;
+      font-size: 16px;
+    }
+  }
+
   &-header {
+    z-index: 9999;
     top: 10px;
     position: absolute;
     width: calc(100vw - 20px);
@@ -7,7 +38,7 @@
     transform: translateX(-50%);
     display: flex;
     justify-content: center;
-    color: #69728a;
+    color: #3b3b3b;
     border-radius: 10px;
     background: #dfe9ff;
     background: linear-gradient(

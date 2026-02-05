@@ -1,13 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { DatePicker, List, Card, Space } from "antd";
-import { SmileTwoTone, MehTwoTone } from "@ant-design/icons";
+import { MehFilled, SmileFilled } from "@ant-design/icons";
 import dayjs from "dayjs";
 import "./style.scss";
 
 // Mock data - replace with actual data fetching later
 import teamData from "../team/list/data"; // Using teamData for team names
 import userData from "../user/list/data"; // Assuming this has all user data
+import StyledRangePicker from "@/components/RangePicker";
 
 const { RangePicker } = DatePicker;
 
@@ -161,11 +162,12 @@ const AttendanceCountPage = () => {
   return (
     <div className="page-container">
       <div className="common-form">
-        <h1>참석률 조회</h1>
-        <div className="range-picker-container">
-          <RangePicker onChange={handleRangeChange} />
+        <div className="common-form-title">
+          <h1>참석률 조회</h1>
         </div>
-
+        <div className="range-picker-container">
+          <StyledRangePicker onChange={handleRangeChange} />
+        </div>
         {dateRange[0] && dateRange[1] ? (
           <List
             itemLayout="vertical"
@@ -188,14 +190,15 @@ const AttendanceCountPage = () => {
                           </div>
                         </div>
                         {team.highlight ? (
-                          <SmileTwoTone
-                            twoToneColor="#eb2f96"
-                            style={{ fontSize: 32 }}
+                          <SmileFilled
+                            style={{
+                              fontSize: 32,
+                              color: "rgb(237 119 154)",
+                            }}
                           />
                         ) : (
-                          <MehTwoTone
-                            twoToneColor="gray"
-                            style={{ fontSize: 32 }}
+                          <MehFilled
+                            style={{ fontSize: 32, color: "#696464" }}
                           />
                         )}
                       </div>

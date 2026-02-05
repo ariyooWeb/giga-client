@@ -176,7 +176,7 @@ const OpenteamRegister = ({
             <Form.Item
               label={<div className="common-form-label">날짜</div>}
               name="date"
-              rules={[{ required: true, message: "날짜" }]}
+              rules={[{ required: true, message: "날짜는 필수 입력입니다." }]}
             >
               <StyledDatePicker
                 style={{ width: "100%" }}
