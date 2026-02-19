@@ -1,10 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./style.scss";
-import { Input, Tooltip } from "antd";
+import { Input, Tooltip, message } from "antd";
 import StyledInput from "@/components/Input";
-
-import namesExample from "./data";
+import { getUsersApi } from "@/tools/api";
 
 const UserListMatrix = ({
   selectedUserIds = [],
@@ -12,15 +11,35 @@ const UserListMatrix = ({
   disabled = false,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await getUsersApi();
+        // Assuming the API returns a 'data' object with a 'users' array inside
+        if (response.data && Array.isArray(response.data.users)) {
+          setUsers(response.data.users);
+        } else {
+          // Handle cases where the data is directly an array or other structures
+          setUsers(response.data || response);
+        }
+      } catch (error) {
+        message.error("Failed to fetch users.");
+        console.error("Failed to fetch users:", error);
+      }
+    };
+
+    fetchUsers();
+  }, []);
 
   const handleSearchChange = (e) => {
     if (!disabled) {
-      // Only allow search if not disabled
       setSearchTerm(e.target.value);
     }
   };
 
-  const filteredNames = namesExample.filter((user) =>
+  const filteredNames = users.filter((user) =>
     user.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
