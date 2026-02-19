@@ -83,15 +83,15 @@ const Header = () => {
           />
           <Menu items={menuItems} onClick={onClick} current={pathname} />
         </div>
-        <div className="main-header-info">
+        <div className="menus">
           {token ? (
             <>
-              <div className="main-header-info-login" onClick={handleLogout}>
+              <div className="menus-menu" onClick={handleLogout}>
                 로그아웃
               </div>
             </>
           ) : (
-            <div className="main-header-info-login" onClick={handleLogin}>
+            <div className="menus-menu" onClick={handleLogin}>
               로그인
             </div>
           )}

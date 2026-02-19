@@ -27,5 +27,6 @@
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
     "tailwindcss": "^4"
-  }
+  },
+  "proxy": "http://1.231.152.182:3333"
 }

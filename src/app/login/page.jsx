@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
-import { Form, Input, Button } from "antd";
+import { Form } from "antd";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../store/user";
 import { loginApi } from "../../tools/api";
-import "./style.scss";
+import StyledInput from "@/components/Input";
+import StyledButton from "@/components/Button";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -23,29 +24,29 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="login-page">
-      <div className="login-page-form">
-        <h1>Login</h1>
+    <div className="page-container">
+      <div className="common-form">
+        <div className="common-form-title">
+          <h1>Login</h1>
+        </div>
         <Form onFinish={onFinish}>
-          <div className="login-page-form-items">
+          <div className="common-form-items">
             <Form.Item
-              label="아이디"
               name="loginId"
               rules={[{ required: true, message: "아이디를 입력해주세요!" }]}
             >
-              <Input />
+              <StyledInput placeholder="아이디" />
             </Form.Item>
             <Form.Item
-              label="비밀번호"
               name="password"
               rules={[{ required: true, message: "비밀번호를 입력해주세요!" }]}
             >
-              <Input.Password />
+              <StyledInput.Password placeholder="비밀번호" />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit" block>
+              <StyledButton type="primary" htmlType="submit" block>
                 Login
-              </Button>
+              </StyledButton>
             </Form.Item>
           </div>
         </Form>
