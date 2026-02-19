@@ -1,9 +1,9 @@
-"use client";
 import React, { useState, useEffect } from "react";
 import "./style.scss";
 import { Input, Tooltip, message } from "antd";
 import StyledInput from "@/components/Input";
 import { getUsersApi } from "@/tools/api";
+import { useSelector } from "react-redux";
 
 const UserListMatrix = ({
   selectedUserIds = [],
@@ -12,17 +12,20 @@ const UserListMatrix = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [users, setUsers] = useState([]);
+  const userListNeedsRefresh = useSelector((state) => state.user.userListNeedsRefresh);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await getUsersApi();
-        // Assuming the API returns a 'data' object with a 'users' array inside
-        if (response.data && Array.isArray(response.data.users)) {
-          setUsers(response.data.users);
-        } else {
-          // Handle cases where the data is directly an array or other structures
-          setUsers(response.data || response);
+        // Assuming the API returns a 'data' object with an 'items' array inside
+        if (response.data && Array.isArray(response.data.items)) {
+          setUsers(response.data.items);
+        } else if (Array.isArray(response.data)) { // Fallback for direct array in data
+          setUsers(response.data);
+        }
+        else {
+          setUsers([]); // Ensure users is always an array
         }
       } catch (error) {
         message.error("Failed to fetch users.");
@@ -31,7 +34,7 @@ const UserListMatrix = ({
     };
 
     fetchUsers();
-  }, []);
+  }, [userListNeedsRefresh]);
 
   const handleSearchChange = (e) => {
     if (!disabled) {
@@ -40,7 +43,7 @@ const UserListMatrix = ({
   };
 
   const filteredNames = users.filter((user) =>
-    user.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    user["user_name"].toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -56,20 +59,20 @@ const UserListMatrix = ({
       />
       <div className="user-list-matrix-grid">
         {filteredNames.map((user, index) => {
-          const isSelected = selectedUserIds.includes(user.id);
+          const isSelected = selectedUserIds.includes(user["user_id"]);
           return (
             <div
               key={index}
               className={`user-list-matrix-item ${isSelected ? "selected" : ""}`}
               onClick={() => {
                 if (!disabled) {
-                  onUserSelect(user.id);
+                  onUserSelect(user["user_id"]);
                 }
               }}
               style={{ cursor: disabled ? "not-allowed" : "pointer" }}
             >
               <Tooltip title={user.nickname}>
-                <span>{user.name}</span>
+                <span>{user["user_name"]}</span>
               </Tooltip>
             </div>
           );

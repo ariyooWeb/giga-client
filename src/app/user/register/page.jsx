@@ -6,11 +6,15 @@ import StyledSelect from "@/components/Select/index";
 import StyledCheckbox from "@/components/Checkbox";
 import StyledButton from "@/components/Button";
 import { registerUserApi } from "@/tools/api";
+import { useDispatch } from "react-redux";
+import { triggerUserListRefresh } from "@/store/user";
 import "./style.scss";
 
 const UserRegister = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const birthRegex = /^\d{4}-\d{2}-\d{2}$/;
+  const dispatch = useDispatch();
+  const [form] = Form.useForm(); // Get form instance
 
   const onFinish = async (values) => {
     try {
@@ -23,14 +27,19 @@ const UserRegister = () => {
         nickname: values.nickname,
         gender: values.gender,
         birth: values.birth,
-        is_admin: isAdmin,
+        is_admin: isAdmin, // isAdmin state from checkbox
         local: values.local,
+        // 임시 part_id. 실제 구현에서는 동적으로 가져와야 합니다.
         part_id: Number(values.part),
       };
 
       const response = await registerUserApi(userData);
       message.success("회원 등록 성공!");
       console.log("User registered successfully:", response);
+      form.resetFields(); // Clear form fields
+      // Optionally reset isAdmin if it's not managed by form.resetFields
+      setIsAdmin(false); 
+      dispatch(triggerUserListRefresh()); // Trigger refresh of user list
     } catch (error) {
       message.error(error.message || "회원 등록 실패.");
       console.error("User registration failed:", error);
@@ -41,7 +50,7 @@ const UserRegister = () => {
       <div className="common-form-title">
         <h1>회원관리</h1>
       </div>
-      <Form onFinish={onFinish}>
+      <Form form={form} onFinish={onFinish}>
         <div className="common-form-items">
           <Form.Item
             name="name"
@@ -80,7 +89,6 @@ const UserRegister = () => {
             <StyledInput
               placeholder="생년월일 (1990-11-30)"
               autoComplete="new-password"
-              name={Math.random().toString(36).substring(2)}
             />
           </Form.Item>
           <Form.Item
