@@ -1,10 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import { List, Button, Radio } from "antd"; // Import Button and Radio
+import { useSelector } from "react-redux"; // Import useSelector
 import "./style.scss";
 import { PlusOutlined, EditOutlined, UserAddOutlined } from "@ant-design/icons";
 import teamData from "./data";
-import namesExample from "../../user/list/data";
+// import namesExample from "../../user/list/data"; // Removed
+
 
 const TeamListPage = ({
   onViewChange, // Renamed prop
@@ -12,6 +14,8 @@ const TeamListPage = ({
   setSelectedValue,
   setFormMode, // New prop
 }) => {
+  const allUsers = useSelector((state) => state.user.users); // Get all users from Redux store
+
   const handleItemClick = (index) => {
     setSelectedValue(index);
     // Pass the usersIds of the selected team directly
@@ -30,7 +34,7 @@ const TeamListPage = ({
   const getUserNames = (userIds) => {
     return userIds
       .map((id) => {
-        const user = namesExample.find((user) => user.id === id);
+        const user = allUsers.find((user) => user.id === id); // Use allUsers
         return user ? user.name : null;
       })
       .filter(Boolean)

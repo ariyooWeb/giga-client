@@ -4,10 +4,11 @@ import { DatePicker, List, Card, Space } from "antd";
 import { MehFilled, SmileFilled } from "@ant-design/icons";
 import dayjs from "dayjs";
 import "./style.scss";
+import { useSelector } from "react-redux"; // Import useSelector
 
 // Mock data - replace with actual data fetching later
 import teamData from "../team/list/data"; // Using teamData for team names
-import userData from "../user/list/data"; // Assuming this has all user data
+// import userData from "../user/list/data"; // Assuming this has all user data - REMOVED
 import StyledRangePicker from "@/components/RangePicker";
 
 const { RangePicker } = DatePicker;
@@ -62,6 +63,8 @@ const AttendanceCountPage = () => {
   const [dateRange, setDateRange] = useState([null, null]); // [start, end]
   const [attendanceData, setAttendanceData] = useState([]);
   const [expandedTeam, setExpandedTeam] = useState(null); // State to control expanded team
+
+  const allUsers = useSelector((state) => state.user.users); // Get all users from Redux store
 
   useEffect(() => {
     // Initial calculation or recalculate when dateRange changes
@@ -121,7 +124,7 @@ const AttendanceCountPage = () => {
 
         const memberDetails = Object.entries(data.members).map(
           ([userId, memberData]) => {
-            const user = userData.find((u) => u.id === parseInt(userId));
+            const user = allUsers.find((u) => u.id === parseInt(userId)); // Use allUsers
             const userName = user ? user.name : `User ${userId}`;
 
             totalTeamAttendance += memberData.attendedCount; // Accumulate for team total

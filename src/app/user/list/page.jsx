@@ -9,10 +9,13 @@ const UserListMatrix = ({
   selectedUserIds = [],
   onUserSelect = () => {},
   disabled = false,
+  mode,
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [users, setUsers] = useState([]);
-  const userListNeedsRefresh = useSelector((state) => state.user.userListNeedsRefresh);
+  const userListNeedsRefresh = useSelector(
+    (state) => state.user.userListNeedsRefresh,
+  );
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -21,10 +24,10 @@ const UserListMatrix = ({
         // Assuming the API returns a 'data' object with an 'items' array inside
         if (response.data && Array.isArray(response.data.items)) {
           setUsers(response.data.items);
-        } else if (Array.isArray(response.data)) { // Fallback for direct array in data
+        } else if (Array.isArray(response.data)) {
+          // Fallback for direct array in data
           setUsers(response.data);
-        }
-        else {
+        } else {
           setUsers([]); // Ensure users is always an array
         }
       } catch (error) {
@@ -69,7 +72,10 @@ const UserListMatrix = ({
                   onUserSelect(user["user_id"]);
                 }
               }}
-              style={{ cursor: disabled ? "not-allowed" : "pointer" }}
+              style={{
+                cursor: disabled || mode === "read" ? "default" : "pointer",
+                pointerEvents: disabled || mode === "read" ? "none" : "auto",
+              }}
             >
               <Tooltip title={user.nickname}>
                 <span>{user["user_name"]}</span>

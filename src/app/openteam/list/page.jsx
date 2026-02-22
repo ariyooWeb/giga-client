@@ -35,6 +35,7 @@ const OpenteamListPage = ({
         <div className="team-list">
           {openteamData.map((item, index) => (
             <div
+              key={`${item.date}-${item.song}`}
               className="team-list-item"
               onClick={() => handleItemClick(index)}
             >

@@ -1,18 +1,18 @@
 "use client";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import OpenteamListPage from "./list/page";
 import OpenteamRegister from "./register/page";
 import UserListMatrix from "../user/list/page";
 import openteamData from "./list/data";
 import "./style.scss";
 
-import namesExample from "../user/list/data"; // Import the full user data
-
 const OpenteamPage = () => {
   const [current, setCurrent] = useState("list");
   const [selectedValue, setSelectedValue] = useState(null);
   const [selectedUserIds, setSelectedUserIds] = useState([]); // State now holds IDs
   const [formMode, setFormMode] = useState("register"); // New state for form mode, default to 'register' for new entry
+  const allUsers = useSelector((state) => state.user.users);
 
   const handleSetCurrent = (view) => {
     setCurrent(view);
@@ -33,7 +33,7 @@ const OpenteamPage = () => {
     selectedValue !== null ? openteamData[selectedValue] : null;
 
   // Derive the full user objects from the IDs
-  const selectedUsers = namesExample.filter((user) =>
+  const selectedUsers = allUsers?.filter((user) =>
     selectedUserIds.includes(user.id),
   );
 

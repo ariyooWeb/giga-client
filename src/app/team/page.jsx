@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
+import { useSelector } from "react-redux"; // Import useSelector
 import TeamListPage from "./list/page";
 import TeamRegister from "./register/page";
 import UserListMatrix from "../user/list/page";
 import teamData from "./list/data";
-import namesExample from "../user/list/data"; // Import the full user data
+// import namesExample from "../user/list/data"; // Remove this import
 import "./style.scss";
 
 const TeamPage = () => {
@@ -12,6 +13,8 @@ const TeamPage = () => {
   const [selectedValue, setSelectedValue] = useState(null);
   const [selectedUserIds, setSelectedUserIds] = useState([]); // State now holds IDs
   const [formMode, setFormMode] = useState("register"); // New state for form mode, default to 'register' for new entry
+
+  const allUsers = useSelector((state) => state.user.users); // Get all users from Redux store
 
   const handleViewChange = (view, initialSelectedUserIds = []) => {
     setCurrent(view); // Update the 'current' state
@@ -43,7 +46,7 @@ const TeamPage = () => {
     selectedValue !== null ? teamData[selectedValue] : null;
 
   // Derive the full user objects from the IDs
-  const selectedUsers = namesExample.filter((user) =>
+  const selectedUsers = allUsers.filter((user) => // Use allUsers instead of namesExample
     selectedUserIds.includes(user.id),
   );
 

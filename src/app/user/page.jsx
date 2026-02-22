@@ -8,7 +8,7 @@ const UserPage = () => {
   return (
     <div className="page-container">
       <UserRegister />
-      <UserListMatrix />
+      <UserListMatrix mode="read" />
     </div>
   );
 };

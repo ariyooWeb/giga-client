@@ -2,8 +2,8 @@
 import React from "react";
 import { Form } from "antd";
 import { useDispatch } from "react-redux";
-import { setToken } from "../../store/user";
-import { loginApi } from "../../tools/api";
+import { setToken, setUsers } from "../../store/user"; // Import setUsers
+import { loginApi, getUsersApi } from "../../tools/api"; // Import getUsersApi
 import StyledInput from "@/components/Input";
 import StyledButton from "@/components/Button";
 
@@ -17,6 +17,13 @@ const LoginPage = () => {
 
       dispatch(setToken(res.data.token));
       localStorage.setItem("token", res.data.token);
+
+      // Fetch users after successful login and set them in the store
+      const usersRes = await getUsersApi();
+      if (usersRes.status === "success") {
+        dispatch(setUsers(usersRes.data.items));
+      }
+
       window.location.href = "/";
     } catch (error) {
       console.log(error.message || "로그인에 실패했습니다.");

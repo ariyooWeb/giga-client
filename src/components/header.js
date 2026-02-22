@@ -18,7 +18,11 @@ const Header = () => {
   const pathname = usePathname();
 
   const onClick = (key) => {
-    router.push(key);
+    if (token) {
+      router.push(key);
+    } else {
+      router.push('/login');
+    }
     // setCurrent(key);
   };
   const onClickLogo = () => {

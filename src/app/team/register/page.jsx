@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Form, Input, Button } from "antd";
 import { EditOutlined, UnorderedListOutlined } from "@ant-design/icons";
 import "./style.scss";
-import namesExample from "../../user/list/data"; // For getting user names from IDs
+// import namesExample from "../../user/list/data"; // For getting user names from IDs - REMOVED
 import StyledButton from "@/components/Button";
 import StyledInput from "@/components/Input";
 

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   token: null,
+  users: [], // Add users array to initial state
   userListNeedsRefresh: false, // New state for triggering user list refresh
 };
 
@@ -31,11 +32,14 @@ const userSlice = createSlice({
             }
         }
     },
+    setUsers: (state, action) => { // New reducer to set users
+      state.users = action.payload;
+    },
     triggerUserListRefresh: (state) => { // New reducer to toggle refresh flag
       state.userListNeedsRefresh = !state.userListNeedsRefresh;
     }
   },
 });
 
-export const { setToken, clearToken, loadToken, triggerUserListRefresh } = userSlice.actions;
+export const { setToken, clearToken, loadToken, setUsers, triggerUserListRefresh } = userSlice.actions;
 export default userSlice.reducer;
