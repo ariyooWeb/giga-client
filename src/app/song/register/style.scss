@@ -1,0 +1,21 @@
+.song-register-page {
+  padding: 20px;
+}
+
+.form-item {
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+}
+
+.loading,
+.error {
+  margin-top: 10px;
+}
+
+.error {
+  color: red;
+}

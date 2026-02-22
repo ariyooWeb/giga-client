@@ -12,6 +12,7 @@
     "@ant-design/icons": "^6.1.0",
     "@reduxjs/toolkit": "^2.11.2",
     "antd": "^5.29.3",
+    "axios": "^1.13.5",
     "next": "15.5.4",
     "react": "19.1.0",
     "react-beautiful-dnd": "^13.1.1",
@@ -24,9 +25,11 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/node": "25.3.0",
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
-    "tailwindcss": "^4"
+    "tailwindcss": "^4",
+    "typescript": "5.9.3"
   },
   "proxy": "http://1.231.152.182:3333"
 }
