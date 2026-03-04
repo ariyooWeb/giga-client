@@ -59,20 +59,64 @@ export const registerUserApi = async (userData) => {
     throw new Error(responseData.message || "User registration failed");
   }
 
-  return responseData;
-};
+          return responseData;
 
-export const getUsersApi = async () => {
-  const response = await fetch(`${API_BASE_URL}/users`, {
-    method: "GET",
-    headers: getAuthHeaders(),
-  });
+      };
 
-  const responseData = await response.json();
+      
 
-  if (!response.ok) {
-    throw new Error(responseData.message || "Failed to fetch users");
-  }
+      export const getSingersApi = async () => {
 
-  return responseData;
-};
+        const response = await fetch(`${API_BASE_URL}/singers`, {
+
+          method: "GET",
+
+          headers: getAuthHeaders(),
+
+        });
+
+      
+
+        if (!response.ok) {
+
+          const errorData = await response.json();
+
+          throw new Error(errorData.message || "Failed to fetch singers");
+
+        }
+
+      
+
+        return response.json();
+
+      };
+
+      
+
+      export const getUsersApi = async () => {
+
+        const response = await fetch(`${API_BASE_URL}/users`, {
+
+          method: "GET",
+
+          headers: getAuthHeaders(),
+
+        });
+
+      
+
+        const responseData = await response.json();
+
+      
+
+        if (!response.ok) {
+
+          throw new Error(responseData.message || "Failed to fetch users");
+
+        }
+
+      
+
+        return responseData;
+
+      };
